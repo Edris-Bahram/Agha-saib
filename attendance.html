@@ -59,7 +59,7 @@
       <div class="side-group">
         <div class="side-group-heading"><span data-fa="سمستر" data-fr="Semestre">سمستر</span><span class="chevron">▾</span></div>
         <div class="side-group-content">
-          <a href="schedule.html" data-fa="برنامهٔ هفتگی" data-fr="Emploi du temps">برنامهٔ هفتگی</a>
+          <a href="schedule.html" data-fa="تقسیم اوقات" data-fr="Emploi du temps">تقسیم اوقات</a>
           <a href="announcements.html" data-fa="اعلانات" data-fr="Annonces">اعلانات</a>
         </div>
       </div>
@@ -94,12 +94,12 @@
     <section style="padding-top:12px;">
       <span class="eyebrow reveal" data-fa="حضور و غیاب" data-fr="Présence">حضور و غیاب</span>
       <h2 class="section-title reveal" data-fa="جدول حاضری ۱۶ هفته" data-fr="Tableau de présence 16 semaines">جدول حاضری ۱۶ هفته</h2>
-      <p class="section-sub reveal" data-fa="روی هر جعبهٔ هفته کلیک کن تا بین حاضر، غایب، رخصتی و خالی بچرخد. اطلاعات فقط در همین مرورگر و روی همین گوشی ذخیره می‌شود." data-fr="Cliquez sur chaque case de semaine pour basculer entre présent, absent, excusé et vide. Les données sont enregistrées uniquement sur cet appareil.">روی هر جعبهٔ هفته کلیک کن تا بین حاضر، غایب، رخصتی و خالی بچرخد. اطلاعات فقط در همین مرورگر و روی همین گوشی ذخیره می‌شود.</p>
+      <p class="section-sub reveal" data-fa="روی هر بخش هر هفته کلیک بکو تا بین حاضر، غیر حاضر، روز رخصتی و خالی تغییر داده شود. حاضری هر کس فقط در همین صفحه و روی همین موبایل ذخیره می‌شود." data-fr="Cliquez sur chaque case de semaine pour basculer entre présent, absent, excusé et vide. Les données sont enregistrées uniquement sur cet appareil.">روی هر بخش هر هفته کلیک بکو تا بین حاضر، غیر حاضر، روز رخصتی و خالی تقییر داده شود. حاضری هر کس فقط در همین صفحه و روی همین موبایل ذخیره می‌شود.</p>
 
       <div class="att-legend reveal">
         <span><span class="dotbox" style="background:rgba(47,158,134,0.6);"></span><span data-fa="حاضر" data-fr="Présent">حاضر</span></span>
-        <span><span class="dotbox" style="background:rgba(209,89,74,0.6);"></span><span data-fa="غایب" data-fr="Absent">غایب</span></span>
-        <span><span class="dotbox" style="background:rgba(232,145,45,0.6);"></span><span data-fa="رخصتی" data-fr="Excusé">رخصتی</span></span>
+        <span><span class="dotbox" style="background:rgba(209,89,74,0.6);"></span><span data-fa="غیرحاضر" data-fr="Absent">غیر حاضر</span></span>
+        <span><span class="dotbox" style="background:rgba(232,145,45,0.6);"></span><span data-fa="روز رخصتی" data-fr="Excusé">روز رخصتی</span></span>
         <span><span class="dotbox" style="background:rgba(255,255,255,0.06);border:1px solid var(--glass-border);"></span><span data-fa="خالی" data-fr="Vide">خالی</span></span>
       </div>
 
@@ -113,13 +113,13 @@
   </div>
 
   <aside class="dark-panel">
-    <p class="dp-quote" id="dp-quote">انسان باید در پی حقیقت باشد، نه آسایش.</p>
+    <p class="dp-quote" id="dp-quote">اصل چیز مدیریت است.</p>
     <span class="dp-quote-source" id="dp-quote-source">— آغا صایب</span>
     <div class="dp-divider"></div>
     <div class="dp-guide-title" data-fa="راهنمای سریع" data-fr="Guide rapide">راهنمای سریع</div>
     <ul class="dp-guide-list">
       <li><a href="index.html"><span class="dot"></span><span data-fa="بازگشت به خانه" data-fr="Retour à l'accueil">بازگشت به خانه</span></a></li>
-      <li><a href="schedule.html"><span class="dot"></span><span data-fa="مشاهدهٔ برنامهٔ امروز" data-fr="Voir l'horaire d'aujourd'hui">مشاهدهٔ برنامهٔ امروز</span></a></li>
+      <li><a href="schedule.html"><span class="dot"></span><span data-fa="مشاهدهٔ تقسیم اوقات امروز" data-fr="Voir l'horaire d'aujourd'hui">مشاهدهٔ تقسیم اوقات امروز</span></a></li>
       <li><a href="grades.html"><span class="dot"></span><span data-fa="محاسبهٔ نمرات" data-fr="Calculer les notes">محاسبهٔ نمرات</span></a></li>
       <li><a href="resources.html"><span class="dot"></span><span data-fa="پیوستن به گروه واتساپ" data-fr="Rejoindre WhatsApp">پیوستن به گروه واتساپ</span></a></li>
     </ul>
@@ -143,9 +143,9 @@ const attCourses = [
   {code:'SOC-502', name:'جامعه‌شناسی سیاسی',      credit:3, type:'اجباری'},
   {code:'ISL-503', name:'نظام سیاسی اسلام',       credit:2, type:'اجباری'},
   {code:'ISL-504', name:'نظام اداری اسلام',       credit:2, type:'اجباری'},
-  {code:'SOC-505', name:'جامعه‌شناسی شهری',       credit:3, type:'اختیاری'},
+  {code:'SOC-505', name:'جامعه‌شناسی شهری',       credit:3, type:'اجباری'},
   {code:'PHI-506', name:'فلسفه اسلامی',           credit:3, type:'اجباری'},
-  {code:'ISL-507', name:'عرفان اسلامی',           credit:2, type:'اختیاری'},
+  {code:'ISL-507', name:'عرفان اسلامی',           credit:2, type:'اجباری'},
   {code:'SOC-508', name:'دموگرافی',               credit:2, type:'اختیاری'},
 ];
 
