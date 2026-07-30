@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>آغا صایب | مفاهیم فلسفی</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<link rel="stylesheet" href="style.css">
+<style>
+.concept-card{margin-bottom:18px;padding:22px;}
+.concept-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
+.concept-title{font-family:var(--font-display);font-size:18px;color:var(--text);}
+.concept-author{font-size:12px;color:var(--saffron-bright);font-family:var(--font-latin);}
+.concept-body{font-size:14px;color:var(--text-dim);line-height:1.9;white-space:pre-wrap;}
+.concept-date{font-size:11px;color:var(--text-dim);margin-top:10px;opacity:0.7;}
+.empty-state{text-align:center;padding:40px 20px;color:var(--text-dim);font-size:14px;}
+textarea{
+  width:100%;background:rgba(255,255,255,0.06);border:1px solid var(--glass-border);color:var(--text);
+  padding:12px 14px;border-radius:11px;font-family:var(--font-ui);font-size:14px;outline:none;transition:.25s;
+  resize:vertical;min-height:120px;line-height:1.8;
+}
+textarea:focus{border-color:var(--saffron);background:rgba(255,255,255,0.09);}
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas" class="loading"></canvas>
+
+<div class="shell">
+
+  <aside class="sidebar">
+    <a href="index.html" class="sidebar-brand">آغا صایب</a>
+    <nav>
+      <div class="side-group">
+        <div class="side-group-heading"><span data-fa="مرور کلی" data-fr="Aperçu">مرور کلی</span><span class="chevron">▾</span></div>
+        <div class="side-group-content">
+          <a href="index.html" data-fa="خانه" data-fr="Accueil">خانه</a>
+        </div>
+      </div>
+      <div class="side-group">
+        <div class="side-group-heading"><span data-fa="سمستر" data-fr="Semestre">سمستر</span><span class="chevron">▾</span></div>
+        <div class="side-group-content">
+          <a href="schedule.html" data-fa="برنامهٔ هفتگی" data-fr="Emploi du temps">برنامهٔ هفتگی</a>
+          <a href="announcements.html" data-fa="اعلانات" data-fr="Annonces">اعلانات</a>
+        </div>
+      </div>
+      <div class="side-group">
+        <div class="side-group-heading"><span data-fa="دانشجویی" data-fr="Étudiant">دانشجویی</span><span class="chevron">▾</span></div>
+        <div class="side-group-content">
+          <a href="attendance.html" data-fa="حاضری" data-fr="Présence">حاضری</a>
+          <a href="grades.html" data-fa="نمرات" data-fr="Notes">نمرات</a>
+        </div>
+      </div>
+      <div class="side-group open">
+        <div class="side-group-heading"><span data-fa="بیشتر" data-fr="Plus">بیشتر</span><span class="chevron">▾</span></div>
+        <div class="side-group-content">
+          <a href="philosophy.html" class="current" data-fa="مفاهیم فلسفی" data-fr="Concepts philosophiques">مفاهیم فلسفی</a>
+          <a href="gallery.html" data-fa="گالری" data-fr="Galerie">گالری</a>
+          <a href="resources.html" data-fa="لینک‌ها" data-fr="Liens">لینک‌ها</a>
+        </div>
+      </div>
+    </nav>
+    <div class="lang-switch">
+      <button id="lang-fa" class="active" onclick="setLang('fa')">فارسی</button>
+      <button id="lang-fr" onclick="setLang('fr')">Français</button>
+    </div>
+
+    <!-- ---- سوییچ حالت روز/شب ---- -->
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <span class="icon-moon">🌙</span><span class="icon-sun">☀️</span>
+      <span id="theme-toggle-label" data-fa="حالت روز" data-fr="Mode jour">حالت روز</span>
+    </button>
+  </aside>
+
+  <div class="content-col">
+    <section style="padding-top:12px;">
+      <span class="eyebrow reveal" data-fa="اندیشه‌ورزی" data-fr="Réflexion">اندیشه‌ورزی</span>
+      <h2 class="section-title reveal" data-fa="مفاهیم فلسفی" data-fr="Concepts philosophiques">مفاهیم فلسفی</h2>
+      <p class="section-sub reveal"
+         data-fa="هر دانشجو می‌تواند یک مفهوم یا مقالهٔ کوتاه فلسفی بنویسد و برای دیگران به اشتراک بگذارد. نکته: این مطالب فقط در همین مرورگر ذخیره می‌شوند و برای دیگر بازدیدکنندگان (روی گوشی یا مرورگر دیگر) نمایش داده نمی‌شوند."
+         data-fr="Chaque étudiant peut écrire un concept ou un court article philosophique à partager. Remarque : ce contenu n'est enregistré que dans ce navigateur et n'apparaît pas pour les autres visiteurs (sur un autre téléphone ou navigateur).">
+        هر دانشجو می‌تواند یک مفهوم یا مقالهٔ کوتاه فلسفی بنویسد و برای دیگران به اشتراک بگذارد. نکته: این مطالب فقط در همین مرورگر ذخیره می‌شوند و برای دیگر بازدیدکنندگان (روی گوشی یا مرورگر دیگر) نمایش داده نمی‌شوند.
+      </p>
+
+      <div class="card glass reveal" style="margin-bottom:28px;">
+        <div class="field">
+          <label data-fa="نام شما" data-fr="Votre nom">نام شما</label>
+          <input type="text" id="concept-author" placeholder="مثلاً: احمد رضایی">
+        </div>
+        <div class="field">
+          <label data-fa="عنوان مفهوم" data-fr="Titre du concept">عنوان مفهوم</label>
+          <input type="text" id="concept-title" placeholder="مثلاً: مفهوم آزادی نزد کانت">
+        </div>
+        <div class="field">
+          <label data-fa="متن مقاله" data-fr="Texte de l'article">متن مقاله</label>
+          <textarea id="concept-body" placeholder="نوشتهٔ خود را این‌جا بنویس..."></textarea>
+        </div>
+        <button class="btn" onclick="addConcept()" data-fa="انتشار مفهوم" data-fr="Publier le concept">انتشار مفهوم</button>
+      </div>
+
+      <div id="concept-list"></div>
+    </section>
+
+    <footer>
+      <div class="footer-main">زنده و پایدار باد شاه حبیب شاه</div>
+      <div class="footer-sub">Made by Edris © 2026</div>
+    </footer>
+  </div>
+
+  <aside class="dark-panel">
+    <p class="dp-quote" id="dp-quote">انسان باید در پی حقیقت باشد، نه آسایش.</p>
+    <span class="dp-quote-source" id="dp-quote-source">— آغا صایب</span>
+    <div class="dp-divider"></div>
+    <div class="dp-guide-title" data-fa="راهنمای سریع" data-fr="Guide rapide">راهنمای سریع</div>
+    <ul class="dp-guide-list">
+      <li><a href="index.html"><span class="dot"></span><span data-fa="بازگشت به خانه" data-fr="Retour à l'accueil">بازگشت به خانه</span></a></li>
+      <li><a href="schedule.html"><span class="dot"></span><span data-fa="مشاهدهٔ برنامهٔ امروز" data-fr="Voir l'horaire d'aujourd'hui">مشاهدهٔ برنامهٔ امروز</span></a></li>
+      <li><a href="announcements.html"><span class="dot"></span><span data-fa="آخرین اعلانات" data-fr="Dernières annonces">آخرین اعلانات</span></a></li>
+      <li><a href="resources.html"><span class="dot"></span><span data-fa="پیوستن به گروه واتساپ" data-fr="Rejoindre WhatsApp">پیوستن به گروه واتساپ</span></a></li>
+    </ul>
+  </aside>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="lang.js"></script>
+<script src="bg-scene.js"></script>
+<script>
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=> t.classList.remove('show'), 4000);
+}
+
+/* =========================================================
+   مفاهیم فلسفی — ذخیره در LocalStorage مرورگر خود کاربر
+   -----------------------------------------------------------------
+   نکته: چون این یک صفحهٔ ساکن HTML بدون سرور است، مطالب فقط در
+   همان مرورگری که نوشته شده‌اند نمایش داده می‌شوند. برای اشتراک
+   واقعی بین همهٔ کاربران، نیاز به یک سرویس دیتابیس خارجی (مثل
+   Firebase) است که در آینده می‌توان اضافه کرد.
+========================================================= */
+const CONCEPTS_KEY = 'aghasaib_philosophy_concepts';
+
+function getConcepts(){
+  try{
+    return JSON.parse(localStorage.getItem(CONCEPTS_KEY) || '[]');
+  }catch(e){ return []; }
+}
+function saveConcepts(list){
+  localStorage.setItem(CONCEPTS_KEY, JSON.stringify(list));
+}
+
+function renderConcepts(){
+  const list = getConcepts();
+  const container = document.getElementById('concept-list');
+  container.innerHTML = '';
+
+  if(list.length === 0){
+    container.innerHTML = `<div class="card glass empty-state">${currentLang==='fa' ? 'هنوز هیچ مفهومی نوشته نشده. اولین نفر باش!' : "Aucun concept n'a encore été écrit. Sois le premier !"}</div>`;
+    return;
+  }
+
+  list.slice().reverse().forEach((c, i)=>{
+    const card = document.createElement('div');
+    card.className = 'card glass concept-card';
+    card.innerHTML = `
+      <div class="concept-head">
+        <span class="concept-title">${escapeHtml(c.title)}</span>
+        <span class="concept-author">${escapeHtml(c.author)}</span>
+      </div>
+      <div class="concept-body">${escapeHtml(c.body)}</div>
+      <div class="concept-date">${c.date}</div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function addConcept(){
+  const author = document.getElementById('concept-author').value.trim();
+  const title = document.getElementById('concept-title').value.trim();
+  const body = document.getElementById('concept-body').value.trim();
+
+  if(!author || !title || !body){
+    showToast(currentLang==='fa' ? 'لطفاً نام، عنوان و متن را کامل وارد کنید.' : 'Veuillez remplir le nom, le titre et le texte.');
+    return;
+  }
+
+  const list = getConcepts();
+  list.push({
+    author, title, body,
+    date: new Date().toLocaleDateString('fa-IR')
+  });
+  saveConcepts(list);
+
+  document.getElementById('concept-title').value = '';
+  document.getElementById('concept-body').value = '';
+  renderConcepts();
+  showToast(currentLang==='fa' ? '✓ مفهوم شما منتشر شد.' : '✓ Votre concept a été publié.');
+}
+
+renderConcepts();
+function onLangChange(){ renderConcepts(); }
+</script>
+</body>
+</html>

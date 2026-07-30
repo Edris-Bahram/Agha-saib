@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>آغا صایب | برنامه</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<link rel="stylesheet" href="style.css">
+<style>
+.day-block{margin-bottom:34px;}
+.day-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.day-name{font-family:var(--font-display);font-size:19px;color:var(--text);}
+.day-tag{font-family:var(--font-latin);font-size:10.5px;color:var(--text-dim);letter-spacing:.06em;}
+.holiday-strip{
+  background:linear-gradient(120deg, var(--terracotta), #b04338);
+  color:#fff;text-align:center;padding:22px;border-radius:var(--radius);
+  font-family:var(--font-display);font-size:17px;box-shadow:var(--shadow);
+}
+.admin-box{margin-top:28px;border-top:1px dashed var(--glass-border);padding-top:20px;}
+.admin-toggle{font-size:12.5px;color:var(--text-dim);cursor:pointer;text-decoration:underline;background:none;border:none;font-family:var(--font-ui);}
+.settings-row{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px;}
+.course-edit-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px;align-items:end;}
+@media (max-width:720px){.course-edit-row{grid-template-columns:1fr;}}
+.course-edit-row .ce-label{font-size:11px;color:var(--text-dim);grid-column:1/-1;margin-bottom:-4px;font-family:var(--font-display);}
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas" class="loading"></canvas>
+
+<div class="shell">
+
+  <aside class="sidebar">
+    <a href="index.html" class="sidebar-brand">آغا صایب</a>
+    <nav>
+      <div class="side-group">
+        <div class="side-group-heading"><span data-fa="مرور کلی" data-fr="Aperçu">مرور کلی</span><span class="chevron">▾</span></div>
+        <div class="side-group-content">
+          <a href="index.html" data-fa="خانه" data-fr="Accueil">خانه</a>
+        </div>
+      </div>
+      <div class="side-group open">
+        <div class="side-group-heading"><span data-fa="سمستر" data-fr="Semestre">سمستر</span><span class="chevron">▾</span></div>
+        <div class="side-group-content">
+          <a href="schedule.html" class="current" data-fa="برنامهٔ هفتگی" data-fr="Emploi du temps">برنامهٔ هفتگی</a>
+          <a href="announcements.html" data-fa="اعلانات" data-fr="Annonces">اعلانات</a>
+        </div>
+      </div>
+      <div class="side-group">
+        <div class="side-group-heading"><span data-fa="دانشجویی" data-fr="Étudiant">دانشجویی</span><span class="chevron">▾</span></div>
+        <div class="side-group-content">
+          <a href="attendance.html" data-fa="حاضری" data-fr="Présence">حاضری</a>
+          <a href="grades.html" data-fa="نمرات" data-fr="Notes">نمرات</a>
+        </div>
+      </div>
+      <div class="side-group">
+        <div class="side-group-heading"><span data-fa="بیشتر" data-fr="Plus">بیشتر</span><span class="chevron">▾</span></div>
+        <div class="side-group-content">
+          <a href="philosophy.html" data-fa="مفاهیم فلسفی" data-fr="Concepts philosophiques">مفاهیم فلسفی</a>
+          <a href="gallery.html" data-fa="گالری" data-fr="Galerie">گالری</a>
+          <a href="resources.html" data-fa="لینک‌ها" data-fr="Liens">لینک‌ها</a>
+        </div>
+      </div>
+    </nav>
+    <div class="lang-switch">
+      <button id="lang-fa" class="active" onclick="setLang('fa')">فارسی</button>
+      <button id="lang-fr" onclick="setLang('fr')">Français</button>
+    </div>
+
+    <!-- ---- سوییچ حالت روز/شب ---- -->
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <span class="icon-moon">🌙</span><span class="icon-sun">☀️</span>
+      <span id="theme-toggle-label" data-fa="حالت روز" data-fr="Mode jour">حالت روز</span>
+    </button>
+  </aside>
+
+  <div class="content-col">
+    <section style="padding-top:12px;">
+      <span class="eyebrow reveal" data-fa="جدول هفتگی" data-fr="Emploi du temps">جدول هفتگی</span>
+      <h2 class="section-title reveal" data-fa="برنامهٔ درس‌های هفته" data-fr="Emploi du temps hebdomadaire">برنامهٔ درس‌های هفته</h2>
+      <p class="section-sub reveal"
+         data-fa="هر روز به بخش‌های زمانی مساوی تقسیم شده، از ساعت ۸:۰۰ صبح. نام درس‌ها همیشه فارسی است؛ در حالت فرانسوی فقط نام استادان تغییر می‌کند. زمان‌بندی فقط از طریق پنل ادمین قابل ویرایش است."
+         data-fr="Chaque jour est divisé en périodes égales à partir de 8h00. Les noms des cours restent toujours en persan ; en mode français, seuls les noms des enseignants changent. Les horaires ne sont modifiables que via le panneau admin.">
+        هر روز به بخش‌های زمانی مساوی تقسیم شده، از ساعت ۸:۰۰ صبح. نام درس‌ها همیشه فارسی است؛ در حالت فرانسوی فقط نام استادان تغییر می‌کند. زمان‌بندی فقط از طریق پنل ادمین قابل ویرایش است.
+      </p>
+
+      <div id="schedule-container" class="reveal"></div>
+
+      <div class="card glass admin-box">
+        <button class="admin-toggle" onclick="toggleAdmin()" data-fa="ورود ادمین برای ویرایش زمان‌بندی ▾" data-fr="Connexion admin pour modifier l'horaire ▾">ورود ادمین برای ویرایش زمان‌بندی ▾</button>
+
+        <div id="admin-login" class="hidden" style="margin-top:16px;max-width:320px;">
+          <div class="field">
+            <label data-fa="رمز عبور ادمین" data-fr="Mot de passe admin">رمز عبور ادمین</label>
+            <input type="password" id="admin-pass" placeholder="••••••••">
+          </div>
+          <button class="btn" onclick="adminLogin()" data-fa="ورود" data-fr="Connexion">ورود</button>
+          <p id="admin-error" style="color:var(--terracotta);font-size:12.5px;margin-top:8px;"></p>
+        </div>
+
+        <div id="admin-panel" class="hidden" style="margin-top:20px;">
+          <p style="font-size:13px;color:var(--text-dim);margin-bottom:16px;" data-fa="این تنظیمات روی نمایش «نوار زمانی روزانه» برای همهٔ بازدیدکنندگان اثر می‌گذارد." data-fr="Ces réglages affectent l'affichage de la bande horaire quotidienne pour tous les visiteurs.">این تنظیمات روی نمایش «نوار زمانی روزانه» برای همهٔ بازدیدکنندگان اثر می‌گذارد.</p>
+
+          <div class="settings-row">
+            <div class="field">
+              <label data-fa="ساعت شروع" data-fr="Heure de début">ساعت شروع</label>
+              <input type="number" id="set-start-hour" min="0" max="23">
+            </div>
+            <div class="field">
+              <label data-fa="دقیقهٔ شروع" data-fr="Minute de début">دقیقهٔ شروع</label>
+              <input type="number" id="set-start-min" min="0" max="59">
+            </div>
+            <div class="field">
+              <label data-fa="مدت هر بخش (دقیقه)" data-fr="Durée par période (min)">مدت هر بخش (دقیقه)</label>
+              <input type="number" id="set-period-min" min="1" max="240">
+            </div>
+            <div class="field">
+              <label data-fa="تعداد بخش‌ها" data-fr="Nombre de périodes">تعداد بخش‌ها</label>
+              <input type="number" id="set-period-count" min="1" max="12">
+            </div>
+          </div>
+          <div class="field" style="max-width:260px;">
+            <label data-fa="فاصله بین بخش‌ها (دقیقه)" data-fr="Pause entre les périodes (min)">فاصله بین بخش‌ها (دقیقه)</label>
+            <input type="number" id="set-gap-min" min="0" max="60">
+          </div>
+
+          <button class="btn jade" onclick="applyScheduleSettings()" data-fa="ذخیرهٔ زمان‌بندی" data-fr="Enregistrer l'horaire">ذخیرهٔ زمان‌بندی</button>
+          <button class="btn secondary" onclick="resetScheduleSettings()" style="margin-inline-start:8px;" data-fa="بازگشت به پیش‌فرض" data-fr="Réinitialiser">بازگشت به پیش‌فرض</button>
+          <button class="btn secondary" onclick="adminLogout()" style="margin-inline-start:8px;" data-fa="خروج" data-fr="Déconnexion">خروج</button>
+          <p id="settings-saved-msg" style="margin-top:10px;font-size:12.5px;color:var(--jade-bright);"></p>
+
+          <!-- ---- ویرایش لیست مضامین (نام درس‌ها) در هر بخش ---- -->
+          <div style="margin-top:26px;border-top:1px dashed var(--glass-border);padding-top:20px;">
+            <p style="font-size:13px;color:var(--text-dim);margin-bottom:14px;" data-fa="نام درس هر بخش را می‌توانی این‌جا ویرایش کنی. نام استاد به فارسی و فرانسوی جداگانه ذخیره می‌شود." data-fr="Vous pouvez modifier le nom du cours de chaque période ici. Le nom de l'enseignant est enregistré séparément en persan et en français.">نام درس هر بخش را می‌توانی این‌جا ویرایش کنی. نام استاد به فارسی و فرانسوی جداگانه ذخیره می‌شود.</p>
+            <div id="course-editor"></div>
+            <button class="btn jade" onclick="applyCourseEdits()" data-fa="ذخیرهٔ مضامین" data-fr="Enregistrer les cours">ذخیرهٔ مضامین</button>
+            <button class="btn secondary" onclick="resetCourseEdits()" style="margin-inline-start:8px;" data-fa="بازگشت مضامین به پیش‌فرض" data-fr="Réinitialiser les cours">بازگشت مضامین به پیش‌فرض</button>
+            <p id="course-saved-msg" style="margin-top:10px;font-size:12.5px;color:var(--jade-bright);"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-main">زنده و پایدار باد شاه حبیب شاه</div>
+      <div class="footer-sub">Made by Edris © 2026</div>
+    </footer>
+  </div>
+
+  <aside class="dark-panel">
+    <p class="dp-quote" id="dp-quote">انسان باید در پی حقیقت باشد، نه آسایش.</p>
+    <span class="dp-quote-source" id="dp-quote-source">— آغا صایب</span>
+    <div class="dp-divider"></div>
+    <div class="dp-guide-title" data-fa="راهنمای سریع" data-fr="Guide rapide">راهنمای سریع</div>
+    <ul class="dp-guide-list">
+      <li><a href="index.html"><span class="dot"></span><span data-fa="بازگشت به خانه" data-fr="Retour à l'accueil">بازگشت به خانه</span></a></li>
+      <li><a href="announcements.html"><span class="dot"></span><span data-fa="آخرین اعلانات" data-fr="Dernières annonces">آخرین اعلانات</span></a></li>
+      <li><a href="attendance.html"><span class="dot"></span><span data-fa="ثبت حاضری" data-fr="Enregistrer la présence">ثبت حاضری</span></a></li>
+      <li><a href="resources.html"><span class="dot"></span><span data-fa="پیوستن به گروه واتساپ" data-fr="Rejoindre WhatsApp">پیوستن به گروه واتساپ</span></a></li>
+    </ul>
+  </aside>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="lang.js"></script>
+<script src="bg-scene.js"></script>
+<script>
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=> t.classList.remove('show'), 4000);
+}
+
+/* =========================================================
+   دادهٔ برنامهٔ هفتگی — جای خالی درس‌ها را خودت پر کن
+   -----------------------------------------------------------------
+   هر روز آرایه‌ای دارد که طولش باید با «تعداد بخش‌ها»ی تنظیم‌شده در
+   پنل ادمین برابر باشد (پیش‌فرض ۶ بخش). هر عنصر یا null است
+   (بخش خالی) یا آبجکتی با:
+     course:   نام درس (همیشه فارسی، هرگز ترجمه نمی‌شود)
+     instr_fa: نام استاد به فارسی
+     instr_fr: نام استاد به فرانسوی
+   *** جاهای خالی (null) را با درس‌های واقعی جایگزین کن. ***
+   -----------------------------------------------------------------
+   نکته: این آبجکت «پیش‌فرض کد» است. ادمین می‌تواند از طریق پنل،
+   نام درس/استاد هر بخش را ویرایش کند؛ آن تغییرات در LocalStorage
+   (کلید COURSE_OVERRIDES_KEY) ذخیره و روی این پیش‌فرض اعمال می‌شود.
+========================================================= */
+const scheduleDataDefault = {
+  fa: {
+    'شنبه':      [ {course:'فلسفه عصر جدید', instr_fa:'دکتر گل‌آب شاه امانی', instr_fr:'Dr. Gulab Shah Amani'}, {course:'عرفان اسلامی', instr_fa:'احمد رسول رسول', instr_fr:'Ahmad Rasoul Rasoul'}, null, null, null, null ],
+    'یک‌شنبه':   [ {course:'جامعه‌شناسی سیاسی', instr_fa:'خالد حبیبی', instr_fr:'Khaled Habibi'}, {course:'دموگرافی', instr_fa:'نامشخص', instr_fr:'TBD'}, null, null, null, null ],
+    'دوشنبه':    [ {course:'نظام سیاسی اسلام', instr_fa:'استاد تعیین نشده', instr_fr:'Professeur non défini'}, null, null, null, null, null ],
+    'سه‌شنبه':   [ {course:'نظام اداری اسلام', instr_fa:'نامشخص', instr_fr:'TBD'}, null, null, null, null, null ],
+    'چهارشنبه': [ {course:'جامعه‌شناسی شهری', instr_fa:'نامشخص', instr_fr:'TBD'}, null, null, null, null, null ],
+    'پنج‌شنبه':  [ {course:'فلسفه اسلامی', instr_fa:'بریالی فطرت', instr_fr:'Baryali Fitrat'}, null, null, null, null, null ],
+  },
+  order: ['شنبه','یک‌شنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنج‌شنبه'],
+  dayNames_fr: {'شنبه':'Samedi','یک‌شنبه':'Dimanche','دوشنبه':'Lundi','سه‌شنبه':'Mardi','چهارشنبه':'Mercredi','پنج‌شنبه':'Jeudi'}
+};
+
+const COURSE_OVERRIDES_KEY = 'aghasaib_course_overrides';
+
+/* اعمال تغییرات ذخیره‌شدهٔ ادمین (اگر وجود داشته باشد) روی دادهٔ پیش‌فرض */
+function getScheduleData(){
+  const overrides = JSON.parse(localStorage.getItem(COURSE_OVERRIDES_KEY) || 'null');
+  if(!overrides) return scheduleDataDefault;
+
+  // کپی عمیق از پیش‌فرض تا داده‌های اصلی دست‌نخورده بمانند
+  const merged = JSON.parse(JSON.stringify(scheduleDataDefault));
+  Object.keys(overrides).forEach(dayFa=>{
+    if(!merged.fa[dayFa]) return;
+    overrides[dayFa].forEach((slotOverride, i)=>{
+      if(slotOverride === null) return; // یعنی این بخش دست‌نخورده مانده
+      if(slotOverride === 'EMPTY'){ merged.fa[dayFa][i] = null; return; }
+      merged.fa[dayFa][i] = slotOverride;
+    });
+  });
+  return merged;
+}
+
+let scheduleData = getScheduleData();
+
+function renderSchedule(){
+  scheduleData = getScheduleData();
+  const settings = getScheduleSettings();
+  const periods = buildPeriodTimes(settings);
+  const container = document.getElementById('schedule-container');
+  container.innerHTML = '';
+
+  scheduleData.order.forEach(dayFa=>{
+    const dayLabel = currentLang === 'fa' ? dayFa : scheduleData.dayNames_fr[dayFa];
+    const block = document.createElement('div');
+    block.className = 'day-block';
+
+    const header = document.createElement('div');
+    header.className = 'day-header';
+    header.innerHTML = `<span class="day-name">${dayLabel}</span><span class="day-tag">${settings.periodCount} ${currentLang==='fa' ? 'بخش زمانی' : 'périodes'}</span>`;
+    block.appendChild(header);
+
+    const strip = document.createElement('div');
+    strip.className = 'sundial-strip';
+
+    const dayPeriods = scheduleData.fa[dayFa];
+    for(let i=0; i<settings.periodCount; i++){
+      const slot = dayPeriods[i] || null;
+      const p = document.createElement('div');
+      p.className = 'sundial-period';
+      const hue = 30 - (i * (30-165)/(settings.periodCount-1||1));
+      p.style.background = `hsl(${hue}, 55%, 40%)`;
+      const timeLabel = periods[i] ? `${periods[i].start} - ${periods[i].end}` : '--';
+      if(slot){
+        const instr = currentLang === 'fa' ? slot.instr_fa : slot.instr_fr;
+        p.innerHTML = `
+          <span class="p-num">${currentLang==='fa' ? 'بخش' : 'Période'} ${i+1}</span>
+          <div class="p-time">${timeLabel}</div>
+          <div class="p-course">${slot.course}<span class="p-instr">${instr}</span></div>`;
+      } else {
+        p.style.opacity = '0.45';
+        p.innerHTML = `
+          <span class="p-num">${currentLang==='fa' ? 'بخش' : 'Période'} ${i+1}</span>
+          <div class="p-time">${timeLabel}</div>
+          <div class="p-course">${currentLang==='fa' ? '— خالی —' : '— Libre —'}</div>`;
+      }
+      strip.appendChild(p);
+    }
+
+    block.appendChild(strip);
+    container.appendChild(block);
+  });
+
+  const fridayText = currentLang === 'fa' ? 'جمعه — رخصتی' : 'Vendredi — Jour férié';
+  const holidayBlock = document.createElement('div');
+  holidayBlock.className = 'day-block';
+  holidayBlock.innerHTML = `<div class="holiday-strip">${fridayText}</div>`;
+  container.appendChild(holidayBlock);
+}
+
+renderSchedule();
+function onLangChange(){ renderSchedule(); renderCourseEditor(); }
+
+let isAdmin = false;
+function toggleAdmin(){ document.getElementById('admin-login').classList.toggle('hidden'); }
+
+function fillSettingsForm(){
+  const s = getScheduleSettings();
+  document.getElementById('set-start-hour').value = s.startHour;
+  document.getElementById('set-start-min').value = s.startMinute;
+  document.getElementById('set-period-min').value = s.periodMinutes;
+  document.getElementById('set-period-count').value = s.periodCount;
+  document.getElementById('set-gap-min').value = s.gapMinutes;
+}
+
+function adminLogin(){
+  const pass = document.getElementById('admin-pass').value;
+  if(checkAdminPass(pass)){
+    isAdmin = true;
+    document.getElementById('admin-login').classList.add('hidden');
+    document.getElementById('admin-panel').classList.remove('hidden');
+    document.getElementById('admin-error').textContent = '';
+    fillSettingsForm();
+    renderCourseEditor();
+  } else {
+    document.getElementById('admin-error').textContent = currentLang==='fa' ? 'رمز عبور نادرست است.' : 'Mot de passe incorrect.';
+  }
+}
+function adminLogout(){
+  isAdmin = false;
+  document.getElementById('admin-panel').classList.add('hidden');
+}
+
+function applyScheduleSettings(){
+  const settings = {
+    startHour: parseInt(document.getElementById('set-start-hour').value, 10) || 0,
+    startMinute: parseInt(document.getElementById('set-start-min').value, 10) || 0,
+    periodMinutes: parseInt(document.getElementById('set-period-min').value, 10) || 50,
+    periodCount: parseInt(document.getElementById('set-period-count').value, 10) || 6,
+    gapMinutes: parseInt(document.getElementById('set-gap-min').value, 10) || 0,
+  };
+  saveScheduleSettings(settings);
+  renderSchedule();
+  renderCourseEditor();
+  const msg = document.getElementById('settings-saved-msg');
+  msg.textContent = currentLang==='fa' ? '✓ زمان‌بندی ذخیره شد.' : '✓ Horaire enregistré.';
+  setTimeout(()=> msg.textContent='', 3000);
+}
+
+function resetScheduleSettings(){
+  localStorage.removeItem(SCHEDULE_SETTINGS_KEY);
+  fillSettingsForm();
+  renderSchedule();
+  renderCourseEditor();
+  showToast(currentLang==='fa' ? 'به پیش‌فرض بازگشت.' : 'Réinitialisé.');
+}
+
+/* =========================================================
+   ویرایش لیست مضامین (نام درس‌ها) توسط ادمین
+   -----------------------------------------------------------------
+   برای هر روز و هر بخش زمانی، سه فیلد نمایش داده می‌شود:
+   نام درس (فارسی)، نام استاد (فارسی)، نام استاد (فرانسوی).
+   تغییرات در COURSE_OVERRIDES_KEY ذخیره و روی scheduleDataDefault
+   لایه‌گذاری می‌شود (بدون تغییر خود کد پیش‌فرض).
+========================================================= */
+function renderCourseEditor(){
+  const settings = getScheduleSettings();
+  const data = getScheduleData();
+  const container = document.getElementById('course-editor');
+  container.innerHTML = '';
+
+  scheduleData.order.forEach(dayFa=>{
+    const dayLabel = currentLang === 'fa' ? dayFa : scheduleData.dayNames_fr[dayFa];
+    const dayTitle = document.createElement('p');
+    dayTitle.style.cssText = 'font-family:var(--font-display);font-size:14.5px;color:var(--saffron-bright);margin:16px 0 8px;';
+    dayTitle.textContent = dayLabel;
+    container.appendChild(dayTitle);
+
+    const dayPeriods = data.fa[dayFa] || [];
+    for(let i=0; i<settings.periodCount; i++){
+      const slot = dayPeriods[i] || {course:'', instr_fa:'', instr_fr:''};
+      const row = document.createElement('div');
+      row.className = 'course-edit-row';
+      row.innerHTML = `
+        <span class="ce-label">${currentLang==='fa' ? 'بخش' : 'Période'} ${i+1}</span>
+        <input type="text" class="ce-course" data-day="${dayFa}" data-idx="${i}" placeholder="${currentLang==='fa'?'نام درس':'Nom du cours'}" value="${slot ? (slot.course||'') : ''}">
+        <input type="text" class="ce-instr-fa" data-day="${dayFa}" data-idx="${i}" placeholder="${currentLang==='fa'?'استاد (فارسی)':'Enseignant (fa)'}" value="${slot ? (slot.instr_fa||'') : ''}">
+        <input type="text" class="ce-instr-fr" data-day="${dayFa}" data-idx="${i}" placeholder="${currentLang==='fa'?'استاد (فرانسوی)':'Enseignant (fr)'}" value="${slot ? (slot.instr_fr||'') : ''}">
+      `;
+      container.appendChild(row);
+    }
+  });
+}
+
+function applyCourseEdits(){
+  const overrides = {};
+  scheduleData.order.forEach(dayFa=>{
+    overrides[dayFa] = [];
+  });
+
+  document.querySelectorAll('.ce-course').forEach(input=>{
+    const day = input.getAttribute('data-day');
+    const idx = parseInt(input.getAttribute('data-idx'), 10);
+    const courseVal = input.value.trim();
+    const instrFaInput = document.querySelector(`.ce-instr-fa[data-day="${day}"][data-idx="${idx}"]`);
+    const instrFrInput = document.querySelector(`.ce-instr-fr[data-day="${day}"][data-idx="${idx}"]`);
+    const instrFa = instrFaInput ? instrFaInput.value.trim() : '';
+    const instrFr = instrFrInput ? instrFrInput.value.trim() : '';
+
+    if(!courseVal){
+      overrides[day][idx] = 'EMPTY';
+    } else {
+      overrides[day][idx] = { course: courseVal, instr_fa: instrFa || 'نامشخص', instr_fr: instrFr || 'TBD' };
+    }
+  });
+
+  localStorage.setItem(COURSE_OVERRIDES_KEY, JSON.stringify(overrides));
+  renderSchedule();
+  const msg = document.getElementById('course-saved-msg');
+  msg.textContent = currentLang==='fa' ? '✓ مضامین ذخیره شد.' : '✓ Cours enregistrés.';
+  setTimeout(()=> msg.textContent='', 3000);
+}
+
+function resetCourseEdits(){
+  localStorage.removeItem(COURSE_OVERRIDES_KEY);
+  renderSchedule();
+  renderCourseEditor();
+  showToast(currentLang==='fa' ? 'مضامین به پیش‌فرض بازگشت.' : 'Cours réinitialisés.');
+}
+</script>
+</body>
+</html>
