@@ -9,10 +9,10 @@
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <link rel="stylesheet" href="style.css">
 <style>
-/* =========================================================
-   کارت حاضری هر درس — کلیک روی هر جعبهٔ هفته بین چهار حالت می‌چرخد:
-   خالی → حاضر (سبز) → غایب (قرمز) → رخصتی (زرد) → خالی ...
-========================================================= */
+
+
+
+   
 .att-course-card{margin-bottom:22px;padding:22px;}
 .att-course-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap;}
 .att-course-title{font-family:var(--font-display);font-size:17px;color:var(--text);}
@@ -84,7 +84,6 @@
       <button id="lang-fr" onclick="setLang('fr')">Français</button>
     </div>
 
-    <!-- ---- سوییچ حالت روز/شب ---- -->
     <button class="theme-toggle" onclick="toggleTheme()">
       <span class="icon-moon">🌙</span><span class="icon-sun">☀️</span>
       <span id="theme-toggle-label" data-fa="حالت روز" data-fr="Mode jour">حالت روز</span>
@@ -139,12 +138,6 @@ function showToast(msg){
   setTimeout(()=> t.classList.remove('show'), 4000);
 }
 
-/* =========================================================
-   لیست درس‌ها برای بخش حاضری — با کد درس، کریدت و نوع
-   -----------------------------------------------------------------
-   همان هشت درس آغا صایب؛ در صورت تغییر برنامهٔ درسی این‌جا هم اصلاح کن.
-   type: 'اجباری' یا 'اختیاری'
-========================================================= */
 const attCourses = [
   {code:'PHI-501', name:'فلسفه عصر جدید',        credit:3, type:'اجباری'},
   {code:'SOC-502', name:'جامعه‌شناسی سیاسی',      credit:3, type:'اجباری'},
@@ -156,7 +149,7 @@ const attCourses = [
   {code:'SOC-508', name:'دموگرافی',               credit:2, type:'اختیاری'},
 ];
 
-const ATT_KEY = 'aghasaib_attendance_v2'; // ---- کلید ذخیره‌سازی در LocalStorage مرورگر خود کاربر ----
+const ATT_KEY = 'aghasaib_attendance_v2';
 const ATT_WEEKS = 16;
 const STATE_CYCLE = ['empty', 'present', 'absent', 'excused'];
 const STATE_ICON = { empty:'', present:'✓', absent:'✕', excused:'⏸' };
@@ -224,7 +217,8 @@ function cycleWeekState(courseCode, week, boxEl, cardEl){
   boxEl.setAttribute('data-state', next);
   boxEl.querySelector('.wk-icon').textContent = STATE_ICON[next];
 
-  /* به‌روزرسانی درصد حضور نمایش داده‌شده روی کارت */
+
+   
   const states = Object.values(data[courseCode]);
   const presentCount = states.filter(s=>s==='present').length;
   const filledCount = states.filter(s=>s && s!=='empty').length;
