@@ -42,12 +42,12 @@ textarea:focus{border-color:var(--saffron);background:rgba(255,255,255,0.09);}
       <div class="side-group">
         <div class="side-group-heading"><span data-fa="سمستر" data-fr="Semestre">سمستر</span><span class="chevron">▾</span></div>
         <div class="side-group-content">
-          <a href="schedule.html" data-fa="برنامهٔ هفتگی" data-fr="Emploi du temps">برنامهٔ هفتگی</a>
+          <a href="schedule.html" data-fa=تقسیم اوقای" data-fr="Emploi du temps">تقسیم اوقات</a>
           <a href="announcements.html" data-fa="اعلانات" data-fr="Annonces">اعلانات</a>
         </div>
       </div>
       <div class="side-group">
-        <div class="side-group-heading"><span data-fa="دانشجویی" data-fr="Étudiant">دانشجویی</span><span class="chevron">▾</span></div>
+        <div class="side-group-heading"><span data-fa="محصلی" data-fr="Étudiant">محصلی</span><span class="chevron">▾</span></div>
         <div class="side-group-content">
           <a href="attendance.html" data-fa="حاضری" data-fr="Présence">حاضری</a>
           <a href="grades.html" data-fa="نمرات" data-fr="Notes">نمرات</a>
@@ -67,7 +67,7 @@ textarea:focus{border-color:var(--saffron);background:rgba(255,255,255,0.09);}
       <button id="lang-fr" onclick="setLang('fr')">Français</button>
     </div>
 
-    <!-- ---- سوییچ حالت روز/شب ---- -->
+    
     <button class="theme-toggle" onclick="toggleTheme()">
       <span class="icon-moon">🌙</span><span class="icon-sun">☀️</span>
       <span id="theme-toggle-label" data-fa="حالت روز" data-fr="Mode jour">حالت روز</span>
@@ -76,28 +76,28 @@ textarea:focus{border-color:var(--saffron);background:rgba(255,255,255,0.09);}
 
   <div class="content-col">
     <section style="padding-top:12px;">
-      <span class="eyebrow reveal" data-fa="اندیشه‌ورزی" data-fr="Réflexion">اندیشه‌ورزی</span>
+      <span class="eyebrow reveal" data-fa="اندیشه‌ ورزی" data-fr="Réflexion">اندیشه‌ورزی</span>
       <h2 class="section-title reveal" data-fa="مفاهیم فلسفی" data-fr="Concepts philosophiques">مفاهیم فلسفی</h2>
       <p class="section-sub reveal"
-         data-fa="هر دانشجو می‌تواند یک مفهوم یا مقالهٔ کوتاه فلسفی بنویسد و برای دیگران به اشتراک بگذارد. نکته: این مطالب فقط در همین مرورگر ذخیره می‌شوند و برای دیگر بازدیدکنندگان (روی گوشی یا مرورگر دیگر) نمایش داده نمی‌شوند."
+         data-fa="هر کس می‌تواند یک مفهوم یا مقالهٔ فلسفی بنویسد و برای دیگران به اشتراک بگذارد ."
          data-fr="Chaque étudiant peut écrire un concept ou un court article philosophique à partager. Remarque : ce contenu n'est enregistré que dans ce navigateur et n'apparaît pas pour les autres visiteurs (sur un autre téléphone ou navigateur).">
-        هر دانشجو می‌تواند یک مفهوم یا مقالهٔ کوتاه فلسفی بنویسد و برای دیگران به اشتراک بگذارد. نکته: این مطالب فقط در همین مرورگر ذخیره می‌شوند و برای دیگر بازدیدکنندگان (روی گوشی یا مرورگر دیگر) نمایش داده نمی‌شوند.
+        هر کس می‌تواند یک مفهوم یا مقالهٔ  فلسفی بنویسد و برای دیگران به اشتراک بگذارد..
       </p>
 
       <div class="card glass reveal" style="margin-bottom:28px;">
         <div class="field">
           <label data-fa="نام شما" data-fr="Votre nom">نام شما</label>
-          <input type="text" id="concept-author" placeholder="مثلاً: احمد رضایی">
+          <input type="text" id="concept-author" placeholder="مثلاً: نقیب الله صادقی">
         </div>
         <div class="field">
-          <label data-fa="عنوان مفهوم" data-fr="Titre du concept">عنوان مفهوم</label>
+          <label data-fa="عنوان " data-fr="Titre du concept">عنوان </label>
           <input type="text" id="concept-title" placeholder="مثلاً: مفهوم آزادی نزد کانت">
         </div>
         <div class="field">
           <label data-fa="متن مقاله" data-fr="Texte de l'article">متن مقاله</label>
-          <textarea id="concept-body" placeholder="نوشتهٔ خود را این‌جا بنویس..."></textarea>
+          <textarea id="concept-body" placeholder="نوشتهٔ خوده اینجه بنویس..."></textarea>
         </div>
-        <button class="btn" onclick="addConcept()" data-fa="انتشار مفهوم" data-fr="Publier le concept">انتشار مفهوم</button>
+        <button class="btn" onclick="addConcept()" data-fa="انتشار " data-fr="Publier le concept">انتشار </button>
       </div>
 
       <div id="concept-list"></div>
@@ -110,13 +110,13 @@ textarea:focus{border-color:var(--saffron);background:rgba(255,255,255,0.09);}
   </div>
 
   <aside class="dark-panel">
-    <p class="dp-quote" id="dp-quote">انسان باید در پی حقیقت باشد، نه آسایش.</p>
+    <p class="dp-quote" id="dp-quote">زشتی  چیزی است که از دیدن آن دوباره دوری می کنیم و کراهت داریم تعریفی دیگیری از هنر این است .</p>
     <span class="dp-quote-source" id="dp-quote-source">— آغا صایب</span>
     <div class="dp-divider"></div>
     <div class="dp-guide-title" data-fa="راهنمای سریع" data-fr="Guide rapide">راهنمای سریع</div>
     <ul class="dp-guide-list">
       <li><a href="index.html"><span class="dot"></span><span data-fa="بازگشت به خانه" data-fr="Retour à l'accueil">بازگشت به خانه</span></a></li>
-      <li><a href="schedule.html"><span class="dot"></span><span data-fa="مشاهدهٔ برنامهٔ امروز" data-fr="Voir l'horaire d'aujourd'hui">مشاهدهٔ برنامهٔ امروز</span></a></li>
+      <li><a href="schedule.html"><span class="dot"></span><span data-fa="مشاهدهٔ تقسیم اوقات امروز" data-fr="Voir l'horaire d'aujourd'hui">مشاهدهٔ تقسیم اوقات امروز</span></a></li>
       <li><a href="announcements.html"><span class="dot"></span><span data-fa="آخرین اعلانات" data-fr="Dernières annonces">آخرین اعلانات</span></a></li>
       <li><a href="resources.html"><span class="dot"></span><span data-fa="پیوستن به گروه واتساپ" data-fr="Rejoindre WhatsApp">پیوستن به گروه واتساپ</span></a></li>
     </ul>
@@ -136,12 +136,7 @@ function showToast(msg){
 }
 
 /* =========================================================
-   مفاهیم فلسفی — ذخیره در LocalStorage مرورگر خود کاربر
-   -----------------------------------------------------------------
-   نکته: چون این یک صفحهٔ ساکن HTML بدون سرور است، مطالب فقط در
-   همان مرورگری که نوشته شده‌اند نمایش داده می‌شوند. برای اشتراک
-   واقعی بین همهٔ کاربران، نیاز به یک سرویس دیتابیس خارجی (مثل
-   Firebase) است که در آینده می‌توان اضافه کرد.
+اینجه باید بعدا سرور اضافه کننم
 ========================================================= */
 const CONCEPTS_KEY = 'aghasaib_philosophy_concepts';
 
@@ -160,7 +155,7 @@ function renderConcepts(){
   container.innerHTML = '';
 
   if(list.length === 0){
-    container.innerHTML = `<div class="card glass empty-state">${currentLang==='fa' ? 'هنوز هیچ مفهومی نوشته نشده. اولین نفر باش!' : "Aucun concept n'a encore été écrit. Sois le premier !"}</div>`;
+    container.innerHTML = `<div class="card glass empty-state">${currentLang==='fa' ? 'هنوز هیچ مقاله ای نوشته نشده. اولین نفر باش!' : "Aucun concept n'a encore été écrit. Sois le premier !"}</div>`;
     return;
   }
 
@@ -205,7 +200,7 @@ function addConcept(){
   document.getElementById('concept-title').value = '';
   document.getElementById('concept-body').value = '';
   renderConcepts();
-  showToast(currentLang==='fa' ? '✓ مفهوم شما منتشر شد.' : '✓ Votre concept a été publié.');
+  showToast(currentLang==='fa' ? '✓ مفهوم شما نشر شد.' : '✓ Votre concept a été publié.');
 }
 
 renderConcepts();
