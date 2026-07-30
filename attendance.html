@@ -64,7 +64,7 @@
         </div>
       </div>
       <div class="side-group open">
-        <div class="side-group-heading"><span data-fa="دانشجویی" data-fr="Étudiant">دانشجویی</span><span class="chevron">▾</span></div>
+        <div class="side-group-heading"><span data-fa="محصلی" data-fr="Étudiant">محصلی</span><span class="chevron">▾</span></div>
         <div class="side-group-content">
           <a href="attendance.html" class="current" data-fa="حاضری" data-fr="Présence">حاضری</a>
           <a href="grades.html" data-fa="نمرات" data-fr="Notes">نمرات</a>
@@ -92,7 +92,7 @@
 
   <div class="content-col">
     <section style="padding-top:12px;">
-      <span class="eyebrow reveal" data-fa="حضور و غیاب" data-fr="Présence">حضور و غیاب</span>
+      <span class="eyebrow reveal" data-fa="حاضری" data-fr="Présence">حاضری</span>
       <h2 class="section-title reveal" data-fa="جدول حاضری ۱۶ هفته" data-fr="Tableau de présence 16 semaines">جدول حاضری ۱۶ هفته</h2>
       <p class="section-sub reveal" data-fa="روی هر بخش هر هفته کلیک بکو تا بین حاضر، غیر حاضر، روز رخصتی و خالی تغییر داده شود. حاضری هر کس فقط در همین صفحه و روی همین موبایل ذخیره می‌شود." data-fr="Cliquez sur chaque case de semaine pour basculer entre présent, absent, excusé et vide. Les données sont enregistrées uniquement sur cet appareil.">روی هر بخش هر هفته کلیک بکو تا بین حاضر، غیر حاضر، روز رخصتی و خالی تقییر داده شود. حاضری هر کس فقط در همین صفحه و روی همین موبایل ذخیره می‌شود.</p>
 
@@ -184,7 +184,7 @@ function renderAttendanceCards(){
           <div class="att-course-title">${course.name}</div>
           <div class="att-course-meta">${course.code} · ${course.credit} ${currentLang==='fa'?'کریدت':'crédits'} · ${currentLang==='fa' ? course.type : (course.type==='اجباری' ? 'Obligatoire' : 'Optionnel')}</div>
         </div>
-        <div class="att-course-pct">${pct}%<span class="lbl" data-fa="حضور" data-fr="Présence">${currentLang==='fa'?'حضور':'Présence'}</span></div>
+        <div class="att-course-pct">${pct}%<span class="lbl" data-fa="حاضر" data-fr="Présence">${currentLang==='fa'?'حاضر':'Présence'}</span></div>
       </div>
       <div class="att-weeks-grid" data-course="${course.code}"></div>
     `;
@@ -223,7 +223,7 @@ function cycleWeekState(courseCode, week, boxEl, cardEl){
   const presentCount = states.filter(s=>s==='present').length;
   const filledCount = states.filter(s=>s && s!=='empty').length;
   const pct = filledCount > 0 ? Math.round((presentCount/filledCount)*100) : 0;
-  cardEl.querySelector('.att-course-pct').innerHTML = `${pct}%<span class="lbl">${currentLang==='fa'?'حضور':'Présence'}</span>`;
+  cardEl.querySelector('.att-course-pct').innerHTML = `${pct}%<span class="lbl">${currentLang==='fa'?'حاضر':'Présence'}</span>`;
 }
 
 renderAttendanceCards();
