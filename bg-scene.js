@@ -1,15 +1,6 @@
-/* =========================================================
-   بگ‌گراند سه‌بعدی — شبکهٔ ستارهٔ هشت‌پر اسلامی در حال چرخش آرام
-   -----------------------------------------------------------------
-   این فایل با Three.js یک صحنهٔ سبک می‌سازد: چند حلقه از ستاره‌های
-   هندسی (الهام از نقوش هندسی اسلامی/گره‌چینی) که به آرامی می‌چرخند
-   و با نور زعفرانی/یشمی روشن می‌شوند. برای عملکرد روان، تعداد اشکال
-   محدود نگه داشته شده و روی دستگاه‌های ضعیف‌تر (کمبود حافظه گرافیکی
-   یا prefers-reduced-motion) به‌صورت خودکار ساده‌تر می‌شود.
-========================================================= */
 (function(){
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    return; // احترام به تنظیمات کاربر: بدون انیمیشن سه‌بعدی
+    return;
   }
   if(typeof THREE === 'undefined'){
     console.warn('Three.js بارگذاری نشد؛ پس‌زمینهٔ سه‌بعدی غیرفعال است.');
@@ -27,7 +18,6 @@
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
   renderer.setSize(window.innerWidth, window.innerHeight);
 
-  /* ---- نور محیط + دو نور نقطه‌ای به رنگ زعفرانی و یشمی ---- */
   scene.add(new THREE.AmbientLight(0x223344, 1.1));
   const lightSaffron = new THREE.PointLight(0xf0a13e, 55, 40);
   lightSaffron.position.set(6, 4, 8);
@@ -36,8 +26,6 @@
   lightJade.position.set(-6, -3, 6);
   scene.add(lightJade);
 
-  /* ---- ساخت هندسهٔ ستارهٔ هشت‌پر (اکسترود شده) ----
-     یک ستارهٔ هشت‌پر دوبعدی رسم و به شکل سه‌بعدی اکسترود می‌شود. */
   function makeStarGeometry(points, innerRatio, depth){
     const shape = new THREE.Shape();
     const outerR = 1;
@@ -80,7 +68,6 @@
   }
   scene.add(group);
 
-  /* ---- پارالاکس ملایم با حرکت موس ---- */
   let mouseX = 0, mouseY = 0;
   window.addEventListener('mousemove', (e)=>{
     mouseX = (e.clientX / window.innerWidth - 0.5);
