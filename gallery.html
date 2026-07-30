@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>آغا صایب | گالری</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<link rel="stylesheet" href="style.css">
+<style>
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+@media (max-width:600px){.gallery-grid{grid-template-columns:repeat(2,1fr);}}
+.gallery-grid figure{
+  margin:0;border-radius:16px;overflow:hidden;aspect-ratio:1;
+  border:1px solid var(--glass-border);box-shadow:var(--shadow);position:relative;
+}
+.gallery-grid img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.2,.8,.2,1);}
+.gallery-grid figure:hover img{transform:scale(1.1);}
+.gallery-grid figure::after{
+  content:"";position:absolute;inset:0;background:linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.35));pointer-events:none;
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas" class="loading"></canvas>
+
+<div class="shell">
+
+  <aside class="sidebar">
+    <a href="index.html" class="sidebar-brand">آغا صایب</a>
+    <nav>
+      <div class="side-group">
+        <div class="side-group-heading"><span data-fa="مرور کلی" data-fr="Aperçu">مرور کلی</span><span class="chevron">▾</span></div>
+        <div class="side-group-content">
+          <a href="index.html" data-fa="خانه" data-fr="Accueil">خانه</a>
+        </div>
+      </div>
+      <div class="side-group">
+        <div class="side-group-heading"><span data-fa="سمستر" data-fr="Semestre">سمستر</span><span class="chevron">▾</span></div>
+        <div class="side-group-content">
+          <a href="schedule.html" data-fa="برنامهٔ هفتگی" data-fr="Emploi du temps">برنامهٔ هفتگی</a>
+          <a href="announcements.html" data-fa="اعلانات" data-fr="Annonces">اعلانات</a>
+        </div>
+      </div>
+      <div class="side-group">
+        <div class="side-group-heading"><span data-fa="دانشجویی" data-fr="Étudiant">دانشجویی</span><span class="chevron">▾</span></div>
+        <div class="side-group-content">
+          <a href="attendance.html" data-fa="حاضری" data-fr="Présence">حاضری</a>
+          <a href="grades.html" data-fa="نمرات" data-fr="Notes">نمرات</a>
+        </div>
+      </div>
+      <div class="side-group open">
+        <div class="side-group-heading"><span data-fa="بیشتر" data-fr="Plus">بیشتر</span><span class="chevron">▾</span></div>
+        <div class="side-group-content">
+          <a href="philosophy.html" data-fa="مفاهیم فلسفی" data-fr="Concepts philosophiques">مفاهیم فلسفی</a>
+          <a href="gallery.html" class="current" data-fa="گالری" data-fr="Galerie">گالری</a>
+          <a href="resources.html" data-fa="لینک‌ها" data-fr="Liens">لینک‌ها</a>
+        </div>
+      </div>
+    </nav>
+    <div class="lang-switch">
+      <button id="lang-fa" class="active" onclick="setLang('fa')">فارسی</button>
+      <button id="lang-fr" onclick="setLang('fr')">Français</button>
+    </div>
+
+    <!-- ---- سوییچ حالت روز/شب ---- -->
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <span class="icon-moon">🌙</span><span class="icon-sun">☀️</span>
+      <span id="theme-toggle-label" data-fa="حالت روز" data-fr="Mode jour">حالت روز</span>
+    </button>
+  </aside>
+
+  <div class="content-col">
+    <section style="padding-top:12px;">
+      <span class="eyebrow reveal" data-fa="تصاویر صنف" data-fr="Photos de classe">تصاویر صنف</span>
+      <h2 class="section-title reveal" data-fa="گالری" data-fr="Galerie">گالری</h2>
+      <p class="section-sub reveal" data-fa="لحظاتی از صنف و همصنفان." data-fr="Moments de la classe et des camarades.">لحظاتی از صنف و همصنفان.</p>
+
+      <!-- عکس‌های گالری را با همین نام‌ها کنار فایل‌های html قرار بده -->
+      <div class="gallery-grid reveal-stagger">
+        <figure><img src="class-gallery1.jpg" alt="گالری ۱" loading="lazy"></figure>
+        <figure><img src="class-gallery2.jpg" alt="گالری ۲" loading="lazy"></figure>
+        <figure><img src="class-gallery3.jpg" alt="گالری ۳" loading="lazy"></figure>
+        <figure><img src="class-gallery4.jpg" alt="گالری ۴" loading="lazy"></figure>
+        <figure><img src="class-gallery5.jpg" alt="گالری ۵" loading="lazy"></figure>
+        <figure><img src="class-gallery6.jpg" alt="گالری ۶" loading="lazy"></figure>
+        <figure><img src="class-gallery7.jpg" alt="گالری ۷" loading="lazy"></figure>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-main">زنده و پایدار باد شاه حبیب شاه</div>
+      <div class="footer-sub">Made by Edris © 2026</div>
+    </footer>
+  </div>
+
+  <aside class="dark-panel">
+    <p class="dp-quote" id="dp-quote">انسان باید در پی حقیقت باشد، نه آسایش.</p>
+    <span class="dp-quote-source" id="dp-quote-source">— آغا صایب</span>
+    <div class="dp-divider"></div>
+    <div class="dp-guide-title" data-fa="راهنمای سریع" data-fr="Guide rapide">راهنمای سریع</div>
+    <ul class="dp-guide-list">
+      <li><a href="index.html"><span class="dot"></span><span data-fa="بازگشت به خانه" data-fr="Retour à l'accueil">بازگشت به خانه</span></a></li>
+      <li><a href="schedule.html"><span class="dot"></span><span data-fa="مشاهدهٔ برنامهٔ امروز" data-fr="Voir l'horaire d'aujourd'hui">مشاهدهٔ برنامهٔ امروز</span></a></li>
+      <li><a href="announcements.html"><span class="dot"></span><span data-fa="آخرین اعلانات" data-fr="Dernières annonces">آخرین اعلانات</span></a></li>
+      <li><a href="resources.html"><span class="dot"></span><span data-fa="پیوستن به گروه واتساپ" data-fr="Rejoindre WhatsApp">پیوستن به گروه واتساپ</span></a></li>
+    </ul>
+  </aside>
+
+</div>
+
+<script src="lang.js"></script>
+<script src="bg-scene.js"></script>
+</body>
+</html>
