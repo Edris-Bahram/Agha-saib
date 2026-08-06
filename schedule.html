@@ -44,12 +44,12 @@
       <div class="side-group open">
         <div class="side-group-heading"><span data-fa="سمستر" data-fr="Semestre">سمستر</span><span class="chevron">▾</span></div>
         <div class="side-group-content">
-          <a href="schedule.html" class="current" data-fa="برنامهٔ هفتگی" data-fr="Emploi du temps">برنامهٔ هفتگی</a>
+          <a href="schedule.html" class="current" data-fa="تقسیم اوقات" data-fr="Emploi du temps">تقسیم اوقات</a>
           <a href="announcements.html" data-fa="اعلانات" data-fr="Annonces">اعلانات</a>
         </div>
       </div>
       <div class="side-group">
-        <div class="side-group-heading"><span data-fa="دانشجویی" data-fr="Étudiant">دانشجویی</span><span class="chevron">▾</span></div>
+        <div class="side-group-heading"><span data-fa="محصلی" data-fr="Étudiant">محصلی</span><span class="chevron">▾</span></div>
         <div class="side-group-content">
           <a href="attendance.html" data-fa="حاضری" data-fr="Présence">حاضری</a>
           <a href="grades.html" data-fa="نمرات" data-fr="Notes">نمرات</a>
@@ -69,7 +69,7 @@
       <button id="lang-fr" onclick="setLang('fr')">Français</button>
     </div>
 
-    <!-- ---- سوییچ حالت روز/شب ---- -->
+    
     <button class="theme-toggle" onclick="toggleTheme()">
       <span class="icon-moon">🌙</span><span class="icon-sun">☀️</span>
       <span id="theme-toggle-label" data-fa="حالت روز" data-fr="Mode jour">حالت روز</span>
@@ -78,13 +78,12 @@
 
   <div class="content-col">
     <section style="padding-top:12px;">
-      <span class="eyebrow reveal" data-fa="جدول هفتگی" data-fr="Emploi du temps">جدول هفتگی</span>
+      <span class="eyebrow reveal" data-fa="جدول تقسیم اوقات" data-fr="Emploi du temps">جدول تقسیم اوقات</span>
       <h2 class="section-title reveal" data-fa="برنامهٔ درس‌های هفته" data-fr="Emploi du temps hebdomadaire">برنامهٔ درس‌های هفته</h2>
       <p class="section-sub reveal"
-         data-fa="هر روز به بخش‌های زمانی مساوی تقسیم شده، از ساعت ۸:۰۰ صبح. نام درس‌ها همیشه فارسی است؛ در حالت فرانسوی فقط نام استادان تغییر می‌کند. زمان‌بندی فقط از طریق پنل ادمین قابل ویرایش است."
+         data-fa="نوت: همه روزه درسها از ساعت 8 شروع میشود."
          data-fr="Chaque jour est divisé en périodes égales à partir de 8h00. Les noms des cours restent toujours en persan ; en mode français, seuls les noms des enseignants changent. Les horaires ne sont modifiables que via le panneau admin.">
-        هر روز به بخش‌های زمانی مساوی تقسیم شده، از ساعت ۸:۰۰ صبح. نام درس‌ها همیشه فارسی است؛ در حالت فرانسوی فقط نام استادان تغییر می‌کند. زمان‌بندی فقط از طریق پنل ادمین قابل ویرایش است.
-      </p>
+نوت: همه روزه درسها از ساعت 8 شروع میشود      </p>
 
       <div id="schedule-container" class="reveal"></div>
 
@@ -131,7 +130,7 @@
           <button class="btn secondary" onclick="adminLogout()" style="margin-inline-start:8px;" data-fa="خروج" data-fr="Déconnexion">خروج</button>
           <p id="settings-saved-msg" style="margin-top:10px;font-size:12.5px;color:var(--jade-bright);"></p>
 
-          <!-- ---- ویرایش لیست مضامین (نام درس‌ها) در هر بخش ---- -->
+          <!-- ---- ویرایش لیست مضامین  ---- -->
           <div style="margin-top:26px;border-top:1px dashed var(--glass-border);padding-top:20px;">
             <p style="font-size:13px;color:var(--text-dim);margin-bottom:14px;" data-fa="نام درس هر بخش را می‌توانی این‌جا ویرایش کنی. نام استاد به فارسی و فرانسوی جداگانه ذخیره می‌شود." data-fr="Vous pouvez modifier le nom du cours de chaque période ici. Le nom de l'enseignant est enregistré séparément en persan et en français.">نام درس هر بخش را می‌توانی این‌جا ویرایش کنی. نام استاد به فارسی و فرانسوی جداگانه ذخیره می‌شود.</p>
             <div id="course-editor"></div>
@@ -176,15 +175,15 @@ function showToast(msg){
 }
 
 /* =========================================================
-   دادهٔ برنامهٔ هفتگی — جای خالی درس‌ها را خودت پر کن
+   د
    -----------------------------------------------------------------
    هر روز آرایه‌ای دارد که طولش باید با «تعداد بخش‌ها»ی تنظیم‌شده در
    پنل ادمین برابر باشد (پیش‌فرض ۶ بخش). هر عنصر یا null است
    (بخش خالی) یا آبجکتی با:
-     course:   نام درس (همیشه فارسی، هرگز ترجمه نمی‌شود)
+     course:   درس
      instr_fa: نام استاد به فارسی
      instr_fr: نام استاد به فرانسوی
-   *** جاهای خالی (null) را با درس‌های واقعی جایگزین کن. ***
+   *** . ***
    -----------------------------------------------------------------
    نکته: این آبجکت «پیش‌فرض کد» است. ادمین می‌تواند از طریق پنل،
    نام درس/استاد هر بخش را ویرایش کند؛ آن تغییرات در LocalStorage
@@ -192,12 +191,12 @@ function showToast(msg){
 ========================================================= */
 const scheduleDataDefault = {
   fa: {
-    'شنبه':      [ {course:'فلسفه عصر جدید', instr_fa:'دکتر گل‌آب شاه امانی', instr_fr:'Dr. Gulab Shah Amani'}, {course:'عرفان اسلامی', instr_fa:'احمد رسول رسول', instr_fr:'Ahmad Rasoul Rasoul'}, null, null, null, null ],
-    'یک‌شنبه':   [ {course:'جامعه‌شناسی سیاسی', instr_fa:'خالد حبیبی', instr_fr:'Khaled Habibi'}, {course:'دموگرافی', instr_fa:'نامشخص', instr_fr:'TBD'}, null, null, null, null ],
-    'دوشنبه':    [ {course:'نظام سیاسی اسلام', instr_fa:'استاد تعیین نشده', instr_fr:'Professeur non défini'}, null, null, null, null, null ],
-    'سه‌شنبه':   [ {course:'نظام اداری اسلام', instr_fa:'نامشخص', instr_fr:'TBD'}, null, null, null, null, null ],
-    'چهارشنبه': [ {course:'جامعه‌شناسی شهری', instr_fa:'نامشخص', instr_fr:'TBD'}, null, null, null, null, null ],
-    'پنج‌شنبه':  [ {course:'فلسفه اسلامی', instr_fa:'بریالی فطرت', instr_fr:'Baryali Fitrat'}, null, null, null, null, null ],
+    'شنبه':      [ {course:'عرفان اسلامی', instr_fa:'احمد رسول رسول', instr_fr:'Ahmad Rasoul Rasoul'},{course:'عرفان اسلامی', instr_fa:'احمد رسول رسول', instr_fr:'Ahmad Rasoul Rasoul'}, {course:'فلسفه عصر جدید', instr_fa:'دکتر گل‌آب شاه امانی', instr_fr:'Dr. Gulab Shah Amani'}, {course:'فلسفه عصر جدید', instr_fa:'دکتر گل‌آب شاه امانی', instr_fr:'Dr. Gulab Shah Amani'} , null, null ],
+    'یک‌شنبه':   [ {course:'جامعه‌شناسی سیاسی', instr_fa:'خالد حبیبی', instr_fr:'Khaled Habibi'},{course:'جامعه‌شناسی سیاسی', instr_fa:'خالد حبیبی', instr_fr:'Khaled Habibi'}, {course:'فلسفه اسلامی', instr_fa:'پوهاند فطرت', instr_fr:'Fitrat'},, {course:'فلسفه اسلامی', instr_fa:'پوهاند فطرت', instr_fr:'Fitrat'}, null, null ],
+    'دوشنبه':    [ {course:'جامعه‌شناسی شهری', instr_fa:'استاد سهیم فیضان', instr_fr:'Professeur Sahim Faizan'},{course:'جامعه‌شناسی شهری', instr_fa:'استاد سهیم فیضان', instr_fr:'Professeur Sahim Faizan'} , ,{course:'نظام سیاسی اسلام', instr_fa:'حقانی', instr_fr:'Professeur'} ,,{course:'نظام سیاسی اسلام', instr_fa:'حقانی', instr_fr:''} , null, null ],
+    'سه‌شنبه':   [ {course:'نظام اداری اسلام', instr_fa:'محمد شعبان', instr_fr:'TBD'},{course:'نظام اداری اسلام', instr_fa:'مخمد شعبان', instr_fr:'TBD'},{course:'دموگرافی', instr_fa:'فرهمند', instr_fr:'TBD'},{course:'دموگرافی', instr_fa:'فرهمند', instr_fr:'TBD'}, {course:'فلسفه عصر جدید', instr_fa:'گلاب شاه', instr_fr:'TBD'}, null ],
+    'چهارشنبه': [ null, null, null, null, null, null, null ],
+    'پنج‌شنبه':  [ null, null, null, null, null, null, null ],
   },
   order: ['شنبه','یک‌شنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنج‌شنبه'],
   dayNames_fr: {'شنبه':'Samedi','یک‌شنبه':'Dimanche','دوشنبه':'Lundi','سه‌شنبه':'Mardi','چهارشنبه':'Mercredi','پنج‌شنبه':'Jeudi'}
@@ -273,7 +272,7 @@ function renderSchedule(){
     container.appendChild(block);
   });
 
-  const fridayText = currentLang === 'fa' ? 'جمعه — رخصتی' : 'Vendredi — Jour férié';
+  const fridayText = currentLang === 'fa' ? ' اصل چیز مدیریت است' : 'صل چیز مدیریت است';
   const holidayBlock = document.createElement('div');
   holidayBlock.className = 'day-block';
   holidayBlock.innerHTML = `<div class="holiday-strip">${fridayText}</div>`;
