@@ -15,6 +15,8 @@
 .concept-author{font-size:12px;color:var(--saffron-bright);font-family:var(--font-latin);}
 .concept-body{font-size:14px;color:var(--text-dim);line-height:1.9;white-space:pre-wrap;}
 .concept-date{font-size:11px;color:var(--text-dim);margin-top:10px;opacity:0.7;}
+.seen-heading{margin:8px 0 14px;font-family:var(--font-display);font-size:22px;color:var(--text);}
+.seen-list .concept-card{padding:16px;margin-bottom:12px;}
 .empty-state{text-align:center;padding:40px 20px;color:var(--text-dim);font-size:14px;}
 textarea{
   width:100%;background:rgba(255,255,255,0.06);border:1px solid var(--glass-border);color:var(--text);
@@ -101,6 +103,11 @@ textarea:focus{border-color:var(--saffron);background:rgba(255,255,255,0.09);}
       </div>
 
       <div id="concept-list"></div>
+
+      <section style="margin-top:30px;">
+        <h3 class="seen-heading" data-fa="مقالات دیده شده" data-fr="Articles vus">مقالات دیده شده</h3>
+        <div id="seen-concept-list" class="seen-list"></div>
+      </section>
     </section>
 
     <footer>
@@ -139,6 +146,7 @@ function showToast(msg){
 اینجه باید بعدا سرور اضافه کننم
 ========================================================= */
 const CONCEPTS_KEY = 'aghasaib_philosophy_concepts';
+const SEEN_CONCEPTS_KEY = 'aghasaib_philosophy_seen_concepts';
 
 function getConcepts(){
   try{
@@ -147,6 +155,57 @@ function getConcepts(){
 }
 function saveConcepts(list){
   localStorage.setItem(CONCEPTS_KEY, JSON.stringify(list));
+}
+function getSeenConceptKeys(){
+  try{
+    return JSON.parse(localStorage.getItem(SEEN_CONCEPTS_KEY) || '[]');
+  }catch(e){ return []; }
+}
+function saveSeenConceptKeys(list){
+  localStorage.setItem(SEEN_CONCEPTS_KEY, JSON.stringify(list));
+}
+function conceptKey(c){
+  return `${c.title}||${c.author}||${c.date}`;
+}
+
+function markConceptSeen(c){
+  const seen = getSeenConceptKeys();
+  const key = conceptKey(c);
+  if(!seen.includes(key)){
+    seen.push(key);
+    saveSeenConceptKeys(seen);
+  }
+  renderSeenConcepts();
+}
+
+function renderSeenConcepts(){
+  const container = document.getElementById('seen-concept-list');
+  const concepts = getConcepts();
+  const conceptMap = new Map(concepts.map(c => [conceptKey(c), c]));
+  const seenConcepts = getSeenConceptKeys()
+    .slice()
+    .reverse()
+    .map(key => conceptMap.get(key))
+    .filter(Boolean);
+
+  if(seenConcepts.length === 0){
+    container.innerHTML = `<div class="card glass empty-state">${currentLang==='fa' ? 'هنوز مقالهٔ دیده‌شده‌ای ثبت نشده.' : "Aucun article vu n'est encore enregistré."}</div>`;
+    return;
+  }
+
+  container.innerHTML = '';
+  seenConcepts.forEach((c)=>{
+    const card = document.createElement('div');
+    card.className = 'card glass concept-card';
+    card.innerHTML = `
+      <div class="concept-head">
+        <span class="concept-title">${escapeHtml(c.title)}</span>
+        <span class="concept-author">${escapeHtml(c.author)}</span>
+      </div>
+      <div class="concept-date">${c.date}</div>
+    `;
+    container.appendChild(card);
+  });
 }
 
 function renderConcepts(){
@@ -170,8 +229,10 @@ function renderConcepts(){
       <div class="concept-body">${escapeHtml(c.body)}</div>
       <div class="concept-date">${c.date}</div>
     `;
+    card.addEventListener('click', ()=> markConceptSeen(c));
     container.appendChild(card);
   });
+  renderSeenConcepts();
 }
 
 function escapeHtml(str){
@@ -204,7 +265,10 @@ function addConcept(){
 }
 
 renderConcepts();
-function onLangChange(){ renderConcepts(); }
+function onLangChange(){
+  renderConcepts();
+  renderSeenConcepts();
+}
 </script>
 </body>
 </html>
